@@ -3,7 +3,7 @@ name: Build And Push Universal
 on:
   push:
     branches:
-      - main
+      - multiarch
   release:
     types: [published]
 
