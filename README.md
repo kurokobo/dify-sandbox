@@ -1,45 +1,39 @@
-# Dify-Sandbox
-## Requirements
+# Dify Unsandboxed Sandbox
 
-```bash
-sudo apt-get install pkg-config libseccomp-dev
-```
+🌏 [**English**](./README.md)
+🌏 [**日本語**](./README.ja.md)
 
-## Introduction
-Dify-Sandbox offers a simple way to run untrusted code in a secure environment. It is designed to be used in a multi-tenant environment, where multiple users can submit code to be executed. The code is executed in a sandboxed environment, which restricts the resources and system calls that the code can access.
+> [!CAUTION]
+>
+> - **Using this container image will make your container host extremely vulnerable to attacks from malicious code.**
+> - **Do not use this container image unless you understand what you are trying to do.**
+> - **Do not use in production environment.**
+> - **Do not use in Dify environment shared with others.**
+> - **Use only in an environment that only you can use, for experiments and tests only.**
 
-## Stack
-- **Service**: Gin
-- **Library**: Go
-- **Sandbox**: Seccomp
+## Overview
 
-## Principle
+This is an _unsafe_, _unsandboxed_ version of `langgenius/dify-sandbox`, developed with the aim of removing system calls related limitations.
 
-1. Run `./build/build.sh` to build a Linux native binary file which contains the seccomp filter
-2. A temp directory is created for each code execution
-3. Launch the code execution in a new process and set a chroot jail to restrict the access to the file system
-4. Set the seccomp filter using native library to restrict the system calls that the code can access
-5. Drop the privileges of the process to a non-root user which could not access any resource
-6. Execute the code and capture the output
+It uses the original codebase as is, except that the limitations on system calls have been removed, so it can be used as a replacement for the official `langgenius/dify-sandbox` image.
 
-For now, Dify-Sandbox supports syscalls below:
-```go
-var allowedSyscalls = []int{
-    // file io, only write and close file descriptor
-	SYS_WRITE, SYS_CLOSE,
-	// thread, used to fasten the execution
-	SYS_FUTEX,
-	// memory, allocate and free memory
-	SYS_MMAP, SYS_BRK, SYS_MPROTECT, SYS_MUNMAP,
-	// user/group, used to drop the privileges
-	SYS_SETUID, SYS_SETGID,
-	// process
-	SYS_GETPID, SYS_GETPPID, SYS_GETTID,
-	SYS_EXIT, SYS_EXIT_GROUP,
-	SYS_TGKILL, SYS_RT_SIGACTION,
-	// time
-	SYS_CLOCK_GETTIME, SYS_GETTIMEOFDAY, SYS_TIME, SYS_NANOSLEEP,
-	SYS_EPOLL_CTL,
-}
-```
+<!--
+| Blocks | Languages | Tested |
+| --- | --- | :---: |
+| **Code** | Python | ✅ |
+| **Code** | Node.js | ✅ |
+| **Template** | Python | ✅ |
+-->
 
+## Disclaimer
+
+**Using this container image means that your environment is extremely vulnerable to malicious code.**
+
+- 🚨 **The code run by the user is executed by the privileged user in the container.**
+- 🚨 **The code run by the user can access all files and processes in the container.**
+- 🚨 **The code run by the user can access any network that the container can connect to.**
+- 🚨 **If there is a container escape vulnerability in the container environment, the impact will affect not only the container but also the host and the entire environment to which it is connected.**
+
+**Do not use this container image unless you understand what you are trying to do.**
+
+**To confirm how to use it with full knowledge of the risks, please refer to [the usage page](./docs/usage.md).**
