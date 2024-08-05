@@ -15,7 +15,7 @@ const (
 	PROJECT_NAME = "nodejs-project"
 )
 
-//go:embed nodejs.so
+// //go:embed nodejs.so
 var nodejs_lib []byte
 
 //go:embed dependens

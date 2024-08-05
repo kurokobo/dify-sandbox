@@ -15,7 +15,7 @@ import (
 	"github.com/langgenius/dify-sandbox/internal/utils/log"
 )
 
-//go:embed python.so
+// //go:embed python.so
 var python_lib []byte
 
 const (
