@@ -15,15 +15,15 @@
 
 This is an _unsafe_, _unsandboxed_ version of `langgenius/dify-sandbox`, developed with the aim of removing system calls related limitations.
 
-It uses the original codebase as is, except that the limitations on system calls have been removed, so it can be used as a replacement for the official `langgenius/dify-sandbox` image.
+It uses the original codebase largely as is, except that the limitations on system calls have been removed, so it can be used as a replacement for the official `langgenius/dify-sandbox` image.
 
-<!--
 | Blocks | Languages | Tested |
 | --- | --- | :---: |
 | **Code** | Python | ✅ |
 | **Code** | Node.js | ✅ |
 | **Template** | Python | ✅ |
--->
+
+As an additional feature, this supports additional installation of OS packages via `apt`.
 
 ## Disclaimer
 

@@ -40,7 +40,8 @@ RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
 
 COPY --from=build /bin/main /main
 COPY conf/config.yaml /conf/config.yaml
+COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /main \
     && ln -s /usr/bin/nodejs /usr/local/bin/node
 
-ENTRYPOINT ["/main"]
+ENTRYPOINT ["bash", "/entrypoint.sh"]
