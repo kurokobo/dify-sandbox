@@ -10,6 +10,8 @@ enable_network: True # please make sure there is no network risk in your environ
 enable_preload: False # please keep it as False for security purposes
 log_path: "./logs" # path to store log files, default is "./logs"
 allowed_syscalls: # please leave it empty if you have no idea how seccomp works
+# python_lib_path: # overrides the default lib path list entirely
+# python_lib_path_extra: # appended to the default (or overridden) lib path list
 proxy:
   socks5: ''
   http: ''

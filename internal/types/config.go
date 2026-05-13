@@ -11,6 +11,7 @@ type DifySandboxGlobalConfigurations struct {
 	WorkerTimeout            int      `yaml:"worker_timeout"`
 	PythonPath               string   `yaml:"python_path"`
 	PythonLibPaths           []string `yaml:"python_lib_path"`
+	PythonLibPathsExtra      []string `yaml:"python_lib_path_extra"`
 	PythonPipMirrorURL       string   `yaml:"python_pip_mirror_url"`
 	PythonDepsUpdateInterval string   `yaml:"python_deps_update_interval"`
 	NodejsPath               string   `yaml:"nodejs_path"`

@@ -78,6 +78,31 @@ func InitConfig(path string) error {
 		difySandboxGlobalConfigurations.PythonLibPaths = DEFAULT_PYTHON_LIB_REQUIREMENTS
 	}
 
+	python_lib_path_extra := os.Getenv("PYTHON_LIB_PATH_EXTRA")
+	if python_lib_path_extra != "" {
+		difySandboxGlobalConfigurations.PythonLibPathsExtra = append(
+			difySandboxGlobalConfigurations.PythonLibPathsExtra,
+			strings.Split(python_lib_path_extra, ",")...,
+		)
+	}
+
+	if len(difySandboxGlobalConfigurations.PythonLibPathsExtra) > 0 {
+		difySandboxGlobalConfigurations.PythonLibPaths = append(
+			difySandboxGlobalConfigurations.PythonLibPaths,
+			difySandboxGlobalConfigurations.PythonLibPathsExtra...,
+		)
+	}
+
+	seen := make(map[string]struct{}, len(difySandboxGlobalConfigurations.PythonLibPaths))
+	deduped := difySandboxGlobalConfigurations.PythonLibPaths[:0:0]
+	for _, p := range difySandboxGlobalConfigurations.PythonLibPaths {
+		if _, ok := seen[p]; !ok {
+			seen[p] = struct{}{}
+			deduped = append(deduped, p)
+		}
+	}
+	difySandboxGlobalConfigurations.PythonLibPaths = deduped
+
 	python_pip_mirror_url := os.Getenv("PIP_MIRROR_URL")
 	if python_pip_mirror_url != "" {
 		difySandboxGlobalConfigurations.PythonPipMirrorURL = python_pip_mirror_url
