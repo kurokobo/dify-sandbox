@@ -93,6 +93,16 @@ func (p *PythonRunner) Run(
 		)
 	}
 
+	for _, key := range configuration.ExposeEnvs {
+		key = strings.TrimSpace(key)
+		if key == "" {
+			continue
+		}
+		if val, ok := os.LookupEnv(key); ok {
+			cmd.Env = append(cmd.Env, fmt.Sprintf("%s=%s", key, val))
+		}
+	}
+
 	go func() {
 		_, _ = io.WriteString(codeWriter, code)
 		codeWriter.Close()

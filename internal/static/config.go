@@ -125,6 +125,11 @@ func InitConfig(path string) error {
 		difySandboxGlobalConfigurations.AllowedSyscalls = ary
 	}
 
+	expose_envs := os.Getenv("EXPOSE_ENVS")
+	if expose_envs != "" {
+		difySandboxGlobalConfigurations.ExposeEnvs = strings.Split(expose_envs, ",")
+	}
+
 	if difySandboxGlobalConfigurations.EnableNetwork {
 		slog.Info("network has been enabled")
 		socks5_proxy := os.Getenv("SOCKS5_PROXY")
@@ -160,6 +165,12 @@ func InitConfig(path string) error {
 // avoid global modification, use value copy instead
 func GetDifySandboxGlobalConfigurations() types.DifySandboxGlobalConfigurations {
 	return difySandboxGlobalConfigurations
+}
+
+// SetExposeEnvs overrides the ExposeEnvs configuration at runtime.
+// Intended for use in tests only.
+func SetExposeEnvs(envs []string) {
+	difySandboxGlobalConfigurations.ExposeEnvs = envs
 }
 
 type RunnerDependencies struct {

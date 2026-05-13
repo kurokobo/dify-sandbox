@@ -10,6 +10,7 @@ enable_network: True # please make sure there is no network risk in your environ
 enable_preload: False # please keep it as False for security purposes
 log_path: "./logs" # path to store log files, default is "./logs"
 allowed_syscalls: # please leave it empty if you have no idea how seccomp works
+expose_envs: [] # list of environment variable names to pass through to the code execution environment (e.g. [MY_VAR, ANOTHER_VAR])
 proxy:
   socks5: ''
   http: ''
