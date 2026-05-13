@@ -85,6 +85,10 @@ func (p *PythonRunner) Run(
 		}
 	}
 
+	if configuration.Proxy.NoProxy != "" {
+		cmd.Env = append(cmd.Env, fmt.Sprintf("NO_PROXY=%s", configuration.Proxy.NoProxy))
+	}
+
 	if len(configuration.AllowedSyscalls) > 0 {
 		cmd.Env = append(cmd.Env,
 			fmt.Sprintf("ALLOWED_SYSCALLS=%s",

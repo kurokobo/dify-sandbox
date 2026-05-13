@@ -153,6 +153,15 @@ func InitConfig(path string) error {
 		if difySandboxGlobalConfigurations.Proxy.Http != "" {
 			slog.Info("using http proxy", "proxy", difySandboxGlobalConfigurations.Proxy.Http)
 		}
+
+		no_proxy := os.Getenv("NO_PROXY")
+		if no_proxy != "" {
+			difySandboxGlobalConfigurations.Proxy.NoProxy = no_proxy
+		}
+
+		if difySandboxGlobalConfigurations.Proxy.NoProxy != "" {
+			slog.Info("using no_proxy", "no_proxy", difySandboxGlobalConfigurations.Proxy.NoProxy)
+		}
 	}
 	return nil
 }
